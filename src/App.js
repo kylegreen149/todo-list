@@ -22,6 +22,13 @@ function App() {
       onChange={(e) => setInput(e.target.value)}
       placeholder='Enter a Task...'/>
       <button onClick={handleTasks}>Add Task</button>
+      <ul>
+        {tasks.map((task, index) => (
+          <li key={index}>{task}
+          <button>Delete Tasks</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

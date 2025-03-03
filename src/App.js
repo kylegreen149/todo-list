@@ -5,6 +5,13 @@ function App() {
   const [tasks, setTasks] = useState([])
   const [input, setInput] = useState("")
 
+  function handleTasks() {
+    if (input.trim()) {
+      setTasks([...tasks, input])
+      setInput("")
+    }
+  }
+
   return (
     <div className="App">
       <h1>To-Do List</h1>
@@ -14,7 +21,7 @@ function App() {
       value={input}
       onChange={(e) => setInput(e.target.value)}
       placeholder='Enter a Task...'/>
-      <button>Add Task</button>
+      <button onClick={handleTasks}>Add Task</button>
     </div>
   );
 }

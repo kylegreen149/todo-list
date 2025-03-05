@@ -4,6 +4,8 @@ import { useState } from 'react';
 function App() {
   const [tasks, setTasks] = useState([])
   const [input, setInput] = useState("")
+  const [editIndex, setEditIndex] = useState(null)
+  const [editTask, setEditTask] = useState("")
 
   function handleTasks() {
     if (input.trim()) {
@@ -14,6 +16,19 @@ function App() {
 
   function handleDeleteTasks(index) {
     setTasks(tasks.filter((_, i) => i !== index))
+  }
+
+  function handleEditTask(index) {
+    setEditIndex(index)
+    setEditTask(tasks[index])
+  }
+
+  function handleSaveEdit() {
+    const updatedTasks = [...tasks]
+    updatedTasks[editIndex] = editTask.trim();
+    setTasks(updatedTasks);
+    setEditIndex(null);
+    setEditTask("");
   }
 
   return (
@@ -28,8 +43,23 @@ function App() {
       <button onClick={handleTasks}>Add Task</button>
       <ul>
         {tasks.map((task, index) => (
-          <li key={index}>{task}
-          <button onClick={() => handleDeleteTasks(index)}>Delete Task</button>
+          <li key={index}>
+            {editIndex === index ? (
+              <>
+                <input
+                  type="text"
+                  value={editTask}
+                  onChange={(e) => setEditTask(e.target.value)}
+                />
+                <button onClick={handleSaveEdit}>Save</button>
+              </>
+            ) : (
+              <>
+                {task}
+                <button onClick={() => handleEditTask(index)}>Edit Task</button>
+                <button onClick={() => handleDeleteTasks(index)}>Delete Task</button>
+              </>
+            )}
           </li>
         ))}
       </ul>

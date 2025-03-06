@@ -2,6 +2,7 @@ import './App.css';
 import { useState } from 'react';
 
 function App() {
+  const [theme, setTheme] = useState("light")
   const [tasks, setTasks] = useState([])
   const [input, setInput] = useState("")
   const [editIndex, setEditIndex] = useState(null)
@@ -31,8 +32,17 @@ function App() {
     setEditTask("");
   }
 
+  function toggleTheme() {
+    if (theme === "light") {
+      setTheme("dark")
+    } else {
+      setTheme("light")
+    }
+  }
+
   return (
-    <div className="App">
+    <div className={`App ${theme}`}>
+      <button onClick={toggleTheme}>Use {theme === "light" ? "Dark" : "Light"} Mode</button>
       <h1>To-Do List</h1>
       <h2>Create Tasks and Remove Them from List Once Completed</h2>
       <input 
